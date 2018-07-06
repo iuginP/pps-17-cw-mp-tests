@@ -12,11 +12,6 @@ allprojects {
     }
 }
 
-configure(subprojects) {
-    javadoc.destinationDir = new File("$docsFolderJava/${it.path}")
-    scaladoc.destinationDir = new File("$docsFolderScala/${it.path}")
-}
-
 subprojects {
 
     apply plugin: 'java'
@@ -26,9 +21,10 @@ subprojects {
     apply plugin: 'pmd'
     apply plugin: 'checkstyle'
 
+    sourceCompatibility = "$jdkVersion"
     javadoc.destinationDir = new File("$docsFolderJava/${it.path}")
     scaladoc.destinationDir = new File("$docsFolderScala/${it.path}")
-
+    
     dependencies {
         implementation 'org.scala-lang:scala-library:2.12.2'
         // TODO add logger dependency
@@ -55,3 +51,5 @@ buildscript {
         classpath "gradle.plugin.com.github.maiflai:gradle-scalatest:0.22"
     }
 }
+
+defaultTasks 'clean', 'build', 'javadoc', 'scaladoc'
