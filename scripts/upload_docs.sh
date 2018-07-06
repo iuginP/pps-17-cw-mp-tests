@@ -5,12 +5,12 @@ if [ -n "$GITHUB_API_KEY" ]
   [ "$TRAVIS_BRANCH" == "master" ]; then
 
   echo -e "Publishing docs...\n"
-  find . -type d -name 'latest-docs/java' -exec cp -R '{}' $HOME/latest-javadoc ';'
-  find . -type d -name 'latest-docs/scala' -exec cp -R '{}' $HOME/latest-scaladoc ';'
-  cd $HOME
+  find -path "*/latest-docs/java" -print0 | while IFS= read -r -d $'\0' line; do ls $line; cp -r $line/* $HOME/latest-javadoc; done;
+	find -path "*/latest-docs/scala" -print0 | while IFS= read -r -d $'\0' line; do ls $line; cp -r $line/* $HOME/latest-scaladoc; done;
+	cd $HOME
   git config --global user.email "travis@travis-ci.org"
   git config --global user.name "travis-ci"
-  git clone --quiet --branch=gh-pages https://${$GITHUB_API_KEY}@github.com/iuginP/pps-17-cw-mp-tests gh-pages > /dev/null
+  git clone --quiet --branch=gh-pages https://${GITHUB_API_KEY}@github.com/iuginP/pps-17-cw-mp-tests gh-pages > /dev/null
   cd gh-pages
   git rm -rf ./java
   git rm -rf ./scala
