@@ -12,7 +12,7 @@ allprojects {
     }
 }
 
-configure(subprojects.grep { sharedModulePath == it.path }) {
+configure(subprojects) {
     javadoc.destinationDir = new File("$docsFolderJava/${it.path}")
     scaladoc.destinationDir = new File("$docsFolderScala/${it.path}")
 }
