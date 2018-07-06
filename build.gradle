@@ -22,8 +22,8 @@ subprojects {
     apply plugin: 'checkstyle'
 
     sourceCompatibility = "$jdkVersion"
-    javadoc.destinationDir = new File("$docsFolderJava/${it.path}")
-    scaladoc.destinationDir = new File("$docsFolderScala/${it.path}")
+    javadoc.destinationDir = file("$docsFolderJava/${it.path}")
+    scaladoc.destinationDir = file("$docsFolderScala/${it.path}")
     
     dependencies {
         implementation 'org.scala-lang:scala-library:2.12.2'
