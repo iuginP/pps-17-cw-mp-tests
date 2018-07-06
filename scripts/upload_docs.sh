@@ -5,8 +5,8 @@ if [ -n "$GITHUB_API_KEY" ]
   [ "$TRAVIS_BRANCH" == "master" ]; then
 
   echo -e "Publishing docs...\n"
-  cp -R latest-docs/java $HOME/latest-javadoc
-  cp -R latest-docs/scala $HOME/latest-scaladoc
+  find . -type d -name 'latest-docs/java' -exec cp -R '{}' $HOME/latest-javadoc ';'
+  find . -type d -name 'latest-docs/scala' -exec cp -R '{}' $HOME/latest-scaladoc ';'
   cd $HOME
   git config --global user.email "travis@travis-ci.org"
   git config --global user.name "travis-ci"
