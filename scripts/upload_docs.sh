@@ -5,6 +5,7 @@ if [ -n "$GITHUB_API_KEY" ]
   [ "$TRAVIS_BRANCH" == "master" ]; then
 
   echo -e "Publishing docs...\n"
+  pwd
   mkdir $HOME/latest-javadoc
   mkdir $HOME/latest-scaladoc
   find -path "*/latest-docs/java" -print0 | while IFS= read -r -d $'\0' line; do ls $line; cp -r $line/* $HOME/latest-javadoc; done;
