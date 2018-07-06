@@ -1,3 +1,7 @@
+group = projectGroup
+version = projectVersion
+description = projectDescription
+
 allprojects {
     apply plugin: 'idea'
     apply plugin: 'eclipse'
@@ -16,6 +20,9 @@ subprojects {
     apply plugin: 'com.github.maiflai.scalatest'
     apply plugin: 'pmd'
     apply plugin: 'checkstyle'
+
+    javadoc.destinationDir = new File("$docsFolderJava/${it.path}")
+    scaladoc.destinationDir = new File("$docsFolderScala/${it.path}")
 
     dependencies {
         implementation 'org.scala-lang:scala-library:2.12.2'
