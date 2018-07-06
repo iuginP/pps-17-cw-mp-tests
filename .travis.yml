@@ -24,23 +24,3 @@ after_success: |
     git push -fq origin gh-pages > /dev/null
     echo -e "Published docs to gh-pages.\n"
   fi
-deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: "$DOC_TOKEN"
-  keep-history: true
-  on:
-    repo: iuginP/pps-17-cw-mp
-    branch: gh-pages
-deploy:
-  provider: releases
-  api-key: $GITHUB_API_KEY
-  file_glob: true
-  file:
-   - "releases/services/*"
-   - "releases/clients/*"
-   - "mobile/build/outputs/apk/*"
-  skip_cleanup: true
-  on:
-    repo: iuginP/pps-17-cw-mp
-    tags: true
