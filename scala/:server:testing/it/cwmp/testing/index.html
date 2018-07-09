@@ -117,10 +117,34 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="it.cwmp">cwmp</a></dd></dl></div>
+    </li><li name="it.cwmp.testing.server" visbl="pub" class="indented4 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="server"></a><a id="server:server"></a>
+      <span class="permalink">
+      <a href="../../../it/cwmp/testing/index.html#server" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="server/index.html"><span class="name">server</span></a>
+      </span>
+      
+      
     </li><li class="current-entities indented3">
                         <span class="separator"></span>
-                        <a class="class" href="VerticleTesting.html" title=""></a>
-                        <a href="VerticleTesting.html" title="">VerticleTesting</a>
+                        <a class="trait" href="HttpMatchers.html" title="A trait that collects Http Custom Matchers for scalaTest"></a>
+                        <a href="HttpMatchers.html" title="A trait that collects Http Custom Matchers for scalaTest">HttpMatchers</a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="class" href="VerticleTesting.html" title="A base test class that deploys and undeploys a Verticle under testing"></a>
+                        <a href="VerticleTesting.html" title="A base test class that deploys and undeploys a Verticle under testing">VerticleTesting</a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="class" href="VertxTest.html" title="A base test that provides a Vertx instance and its execution context"></a>
+                        <a href="VertxTest.html" title="A base test that provides a Vertx instance and its execution context">VertxTest</a>
                       </li>
               </ul>
             </div>
@@ -160,10 +184,27 @@
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="it.cwmp.testing.VerticleTesting" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="VerticleTesting[A&lt;:io.vertx.lang.scala.ScalaVerticle]extendsAsyncFunSpecwithBeforeAndAfter"></a><a id="VerticleTesting[A&lt;:ScalaVerticle]:VerticleTesting[A]"></a>
+              <ol><li name="it.cwmp.testing.HttpMatchers" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="HttpMatchersextendsAnyRef"></a><a id="HttpMatchers:HttpMatchers"></a>
       <span class="permalink">
-      <a href="../../../it/cwmp/testing/index.html#VerticleTesting[A&lt;:io.vertx.lang.scala.ScalaVerticle]extendsAsyncFunSpecwithBeforeAndAfter" title="Permalink">
+      <a href="../../../it/cwmp/testing/index.html#HttpMatchersextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="A trait that collects Http Custom Matchers for scalaTest" href="HttpMatchers.html"><span class="name">HttpMatchers</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">A trait that collects Http Custom Matchers for scalaTest
+</p>
+    </li><li name="it.cwmp.testing.VerticleTesting" visbl="pub" class="indented0 " data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="VerticleTesting[A&lt;:io.vertx.lang.scala.ScalaVerticle]extendsVertxTestwithBeforeAndAfterEach"></a><a id="VerticleTesting[A&lt;:ScalaVerticle]:VerticleTesting[A]"></a>
+      <span class="permalink">
+      <a href="../../../it/cwmp/testing/index.html#VerticleTesting[A&lt;:io.vertx.lang.scala.ScalaVerticle]extendsVertxTestwithBeforeAndAfterEach" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -172,10 +213,29 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a title="" href="VerticleTesting.html"><span class="name">VerticleTesting</span></a><span class="tparams">[<span name="A">A &lt;: <span class="extype" name="io.vertx.lang.scala.ScalaVerticle">ScalaVerticle</span></span>]</span><span class="result"> extends <span class="extype" name="org.scalatest.AsyncFunSpec">AsyncFunSpec</span> with <span class="extype" name="org.scalatest.BeforeAndAfter">BeforeAndAfter</span></span>
+        <a title="A base test class that deploys and undeploys a Verticle under testing" href="VerticleTesting.html"><span class="name">VerticleTesting</span></a><span class="tparams">[<span name="A">A &lt;: <span class="extype" name="io.vertx.lang.scala.ScalaVerticle">ScalaVerticle</span></span>]</span><span class="result"> extends <a href="VertxTest.html" class="extype" name="it.cwmp.testing.VertxTest">VertxTest</a> with <span class="extype" name="org.scalatest.BeforeAndAfterEach">BeforeAndAfterEach</span></span>
       </span>
       
+      <p class="shortcomment cmt">A base test class that deploys and undeploys a Verticle under testing
+</p><div class="fullcomment"><div class="comment cmt"><p>A base test class that deploys and undeploys a Verticle under testing
+</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>the type of the verticle to test</p></dd></dl></div>
+    </li><li name="it.cwmp.testing.VertxTest" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="VertxTestextendsAsyncFunSpec"></a><a id="VertxTest:VertxTest"></a>
+      <span class="permalink">
+      <a href="../../../it/cwmp/testing/index.html#VertxTestextendsAsyncFunSpec" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="A base test that provides a Vertx instance and its execution context" href="VertxTest.html"><span class="name">VertxTest</span></a><span class="result"> extends <span class="extype" name="org.scalatest.AsyncFunSpec">AsyncFunSpec</span></span>
+      </span>
       
+      <p class="shortcomment cmt">A base test that provides a Vertx instance and its execution context
+</p>
     </li></ol>
             </div>
 

@@ -121,6 +121,10 @@
                         <a class="object" href="AuthenticationService$.html" title=""></a>
                         <a class="trait" href="" title=""></a>
                         <a href="" title="">AuthenticationService</a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="trait" href="Validation.html" title="A trait that describes the strategy with which an input should be validated"></a>
+                        <a href="Validation.html" title="A trait that describes the strategy with which an input should be validated">Validation</a>
                       </li>
               </ul>
             </div>
@@ -146,7 +150,7 @@
         <span class="kind">trait</span>
       </span>
       <span class="symbol">
-        <span class="name">AuthenticationService</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+        <span class="name">AuthenticationService</span><span class="result"> extends <a href="Validation.html" class="extype" name="it.cwmp.authentication.Validation">Validation</a>[<span class="extype" name="scala.Predef.String">String</span>, <a href="../model/User.html" class="extype" name="it.cwmp.model.User">User</a>]</span>
       </span>
       </h4>
 
@@ -155,7 +159,7 @@
           <span class="toggle">
             Linear Supertypes
           </span>
-          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><a href="Validation.html" class="extype" name="it.cwmp.authentication.Validation">Validation</a>[<span class="extype" name="scala.Predef.String">String</span>, <a href="../model/User.html" class="extype" name="it.cwmp.model.User">User</a>], <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div><div class="toggleContainer block">
             <span class="toggle">
               Known Subclasses
@@ -186,7 +190,7 @@
                   <span class="filtertype">Inherited<br />
                   </span>
                   <ol id="linearization">
-                    <li class="in" name="it.cwmp.authentication.AuthenticationService"><span>AuthenticationService</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                    <li class="in" name="it.cwmp.authentication.AuthenticationService"><span>AuthenticationService</span></li><li class="in" name="it.cwmp.authentication.Validation"><span>Validation</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                   </ol>
                 </div><div class="ancestors">
               <span class="filtertype"></span>
@@ -242,10 +246,10 @@
       </span>
       
       
-    </li><li name="it.cwmp.authentication.AuthenticationService#validate" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="validate(token:String):scala.concurrent.Future[it.cwmp.model.User]"></a><a id="validate(String):Future[User]"></a>
+    </li><li name="it.cwmp.authentication.Validation#validate" visbl="pub" class="indented0 " data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="validate(input:Input):scala.concurrent.Future[Output]"></a><a id="validate(String):Future[User]"></a>
       <span class="permalink">
-      <a href="../../../it/cwmp/authentication/AuthenticationService.html#validate(token:String):scala.concurrent.Future[it.cwmp.model.User]" title="Permalink">
+      <a href="../../../it/cwmp/authentication/AuthenticationService.html#validate(input:Input):scala.concurrent.Future[Output]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -254,10 +258,12 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">validate</span><span class="params">(<span name="token">token: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<a href="../model/User.html" class="extype" name="it.cwmp.model.User">User</a>]</span>
+        <span class="name">validate</span><span class="params">(<span name="input">input: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.concurrent.Future">Future</span>[<a href="../model/User.html" class="extype" name="it.cwmp.model.User">User</a>]</span>
       </span>
       
-      
+      <p class="shortcomment cmt">Validates the input and returns the future containing the output
+</p><div class="fullcomment"><div class="comment cmt"><p>Validates the input and returns the future containing the output
+</p></div><dl class="paramcmts block"><dt class="param">input</dt><dd class="cmt"><p>the input to validate</p></dd><dt>returns</dt><dd class="cmt"><p>the future that will contain the future output</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Validation.html" class="extype" name="it.cwmp.authentication.Validation">Validation</a></dd></dl></div>
     </li></ol>
             </div>
 
@@ -624,7 +630,9 @@
         </div>
 
         <div id="inheritedMembers">
-        <div class="parent" name="scala.AnyRef">
+        <div class="parent" name="it.cwmp.authentication.Validation">
+              <h3>Inherited from <a href="Validation.html" class="extype" name="it.cwmp.authentication.Validation">Validation</a>[<span class="extype" name="scala.Predef.String">String</span>, <a href="../model/User.html" class="extype" name="it.cwmp.model.User">User</a>]</h3>
+            </div><div class="parent" name="scala.AnyRef">
               <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
             </div><div class="parent" name="scala.Any">
               <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>

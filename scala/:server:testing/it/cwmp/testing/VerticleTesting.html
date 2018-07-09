@@ -117,10 +117,34 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="it.cwmp">cwmp</a></dd></dl></div>
+    </li><li name="it.cwmp.testing.server" visbl="pub" class="indented4 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="server"></a><a id="server:server"></a>
+      <span class="permalink">
+      <a href="../../../it/cwmp/testing/index.html#server" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="server/index.html"><span class="name">server</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="index.html" class="extype" name="it.cwmp.testing">testing</a></dd></dl></div>
     </li><li class="current-entities indented3">
                         <span class="separator"></span>
-                        <a class="class" href="" title=""></a>
-                        <a href="" title="">VerticleTesting</a>
+                        <a class="trait" href="HttpMatchers.html" title="A trait that collects Http Custom Matchers for scalaTest"></a>
+                        <a href="HttpMatchers.html" title="A trait that collects Http Custom Matchers for scalaTest">HttpMatchers</a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="class" href="" title="A base test class that deploys and undeploys a Verticle under testing"></a>
+                        <a href="" title="A base test class that deploys and undeploys a Verticle under testing">VerticleTesting</a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="class" href="VertxTest.html" title="A base test that provides a Vertx instance and its execution context"></a>
+                        <a href="VertxTest.html" title="A base test that provides a Vertx instance and its execution context">VertxTest</a>
                       </li>
               </ul>
             </div>
@@ -144,16 +168,17 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <span class="name">VerticleTesting</span><span class="tparams">[<span name="A">A &lt;: <span class="extype" name="io.vertx.lang.scala.ScalaVerticle">ScalaVerticle</span></span>]</span><span class="result"> extends <span class="extype" name="org.scalatest.AsyncFunSpec">AsyncFunSpec</span> with <span class="extype" name="org.scalatest.BeforeAndAfter">BeforeAndAfter</span></span>
+        <span class="name">VerticleTesting</span><span class="tparams">[<span name="A">A &lt;: <span class="extype" name="io.vertx.lang.scala.ScalaVerticle">ScalaVerticle</span></span>]</span><span class="result"> extends <a href="VertxTest.html" class="extype" name="it.cwmp.testing.VertxTest">VertxTest</a> with <span class="extype" name="org.scalatest.BeforeAndAfterEach">BeforeAndAfterEach</span></span>
       </span>
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>A base test class that deploys and undeploys a Verticle under testing
+</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>the type of the verticle to test</p></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
-          <div class="superTypes hiddenContent"><span class="extype" name="org.scalatest.BeforeAndAfter">BeforeAndAfter</span>, <span class="extype" name="org.scalatest.SuiteMixin">SuiteMixin</span>, <span class="extype" name="org.scalatest.AsyncFunSpec">AsyncFunSpec</span>, <span class="extype" name="org.scalatest.AsyncFunSpecLike">AsyncFunSpecLike</span>, <span class="extype" name="org.scalatest.Documenting">Documenting</span>, <span class="extype" name="org.scalatest.Alerting">Alerting</span>, <span class="extype" name="org.scalatest.Notifying">Notifying</span>, <span class="extype" name="org.scalatest.Informing">Informing</span>, <span class="extype" name="org.scalatest.AsyncTestRegistration">AsyncTestRegistration</span>, <span class="extype" name="org.scalatest.AsyncTestSuite">AsyncTestSuite</span>, <span class="extype" name="org.scalatest.CompleteLastly">CompleteLastly</span>, <span class="extype" name="org.scalatest.RecoverMethods">RecoverMethods</span>, <span class="extype" name="org.scalatest.Suite">Suite</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="org.scalatest.Assertions">Assertions</span>, <span class="extype" name="org.scalactic.TripleEquals">TripleEquals</span>, <span class="extype" name="org.scalactic.TripleEqualsSupport">TripleEqualsSupport</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="org.scalatest.BeforeAndAfterEach">BeforeAndAfterEach</span>, <span class="extype" name="org.scalatest.SuiteMixin">SuiteMixin</span>, <a href="VertxTest.html" class="extype" name="it.cwmp.testing.VertxTest">VertxTest</a>, <span class="extype" name="org.scalatest.AsyncFunSpec">AsyncFunSpec</span>, <span class="extype" name="org.scalatest.AsyncFunSpecLike">AsyncFunSpecLike</span>, <span class="extype" name="org.scalatest.Documenting">Documenting</span>, <span class="extype" name="org.scalatest.Alerting">Alerting</span>, <span class="extype" name="org.scalatest.Notifying">Notifying</span>, <span class="extype" name="org.scalatest.Informing">Informing</span>, <span class="extype" name="org.scalatest.AsyncTestRegistration">AsyncTestRegistration</span>, <span class="extype" name="org.scalatest.AsyncTestSuite">AsyncTestSuite</span>, <span class="extype" name="org.scalatest.CompleteLastly">CompleteLastly</span>, <span class="extype" name="org.scalatest.RecoverMethods">RecoverMethods</span>, <span class="extype" name="org.scalatest.Suite">Suite</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="org.scalatest.Assertions">Assertions</span>, <span class="extype" name="org.scalactic.TripleEquals">TripleEquals</span>, <span class="extype" name="org.scalactic.TripleEqualsSupport">TripleEqualsSupport</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -179,7 +204,7 @@
                   <span class="filtertype">Inherited<br />
                   </span>
                   <ol id="linearization">
-                    <li class="in" name="it.cwmp.testing.VerticleTesting"><span>VerticleTesting</span></li><li class="in" name="org.scalatest.BeforeAndAfter"><span>BeforeAndAfter</span></li><li class="in" name="org.scalatest.SuiteMixin"><span>SuiteMixin</span></li><li class="in" name="org.scalatest.AsyncFunSpec"><span>AsyncFunSpec</span></li><li class="in" name="org.scalatest.AsyncFunSpecLike"><span>AsyncFunSpecLike</span></li><li class="in" name="org.scalatest.Documenting"><span>Documenting</span></li><li class="in" name="org.scalatest.Alerting"><span>Alerting</span></li><li class="in" name="org.scalatest.Notifying"><span>Notifying</span></li><li class="in" name="org.scalatest.Informing"><span>Informing</span></li><li class="in" name="org.scalatest.AsyncTestRegistration"><span>AsyncTestRegistration</span></li><li class="in" name="org.scalatest.AsyncTestSuite"><span>AsyncTestSuite</span></li><li class="in" name="org.scalatest.CompleteLastly"><span>CompleteLastly</span></li><li class="in" name="org.scalatest.RecoverMethods"><span>RecoverMethods</span></li><li class="in" name="org.scalatest.Suite"><span>Suite</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="org.scalatest.Assertions"><span>Assertions</span></li><li class="in" name="org.scalactic.TripleEquals"><span>TripleEquals</span></li><li class="in" name="org.scalactic.TripleEqualsSupport"><span>TripleEqualsSupport</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                    <li class="in" name="it.cwmp.testing.VerticleTesting"><span>VerticleTesting</span></li><li class="in" name="org.scalatest.BeforeAndAfterEach"><span>BeforeAndAfterEach</span></li><li class="in" name="org.scalatest.SuiteMixin"><span>SuiteMixin</span></li><li class="in" name="it.cwmp.testing.VertxTest"><span>VertxTest</span></li><li class="in" name="org.scalatest.AsyncFunSpec"><span>AsyncFunSpec</span></li><li class="in" name="org.scalatest.AsyncFunSpecLike"><span>AsyncFunSpecLike</span></li><li class="in" name="org.scalatest.Documenting"><span>Documenting</span></li><li class="in" name="org.scalatest.Alerting"><span>Alerting</span></li><li class="in" name="org.scalatest.Notifying"><span>Notifying</span></li><li class="in" name="org.scalatest.Informing"><span>Informing</span></li><li class="in" name="org.scalatest.AsyncTestRegistration"><span>AsyncTestRegistration</span></li><li class="in" name="org.scalatest.AsyncTestSuite"><span>AsyncTestSuite</span></li><li class="in" name="org.scalatest.CompleteLastly"><span>CompleteLastly</span></li><li class="in" name="org.scalatest.RecoverMethods"><span>RecoverMethods</span></li><li class="in" name="org.scalatest.Suite"><span>Suite</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="org.scalatest.Assertions"><span>Assertions</span></li><li class="in" name="org.scalactic.TripleEquals"><span>TripleEquals</span></li><li class="in" name="org.scalactic.TripleEqualsSupport"><span>TripleEqualsSupport</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                   </ol>
                 </div><div class="ancestors">
               <span class="filtertype"></span>
@@ -214,7 +239,7 @@
         <span class="name">VerticleTesting</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.api.TypeTags.TypeTag">scala.reflect.api.JavaUniverse.TypeTag</span>[<span class="extype" name="it.cwmp.testing.VerticleTesting.A">A</span>]</span>)</span>
       </span>
       
-      
+      <p class="shortcomment cmt"></p>
     </li></ol>
             </div>
 
@@ -484,10 +509,10 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TripleEqualsSupport</dd></dl></div>
-    </li><li name="org.scalatest.BeforeAndAfter#after" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="after(fun:=&gt;Any)(implicitpos:org.scalactic.source.Position):Unit"></a><a id="after(⇒Any)(Position):Unit"></a>
+    </li><li name="it.cwmp.testing.VerticleTesting#afterEach" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="afterEach():Unit"></a>
       <span class="permalink">
-      <a href="../../../it/cwmp/testing/VerticleTesting.html#after(fun:=&gt;Any)(implicitpos:org.scalactic.source.Position):Unit" title="Permalink">
+      <a href="../../../it/cwmp/testing/VerticleTesting.html#afterEach():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -496,26 +521,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">after</span><span class="params">(<span name="fun">fun: ⇒ <span class="extype" name="scala.Any">Any</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="pos">pos: <span class="extype" name="org.scalactic.source.Position">Position</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">afterEach</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>BeforeAndAfter</dd></dl></div>
-    </li><li name="it.cwmp.testing.VerticleTesting#afterAbs" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="afterAbs():Unit"></a>
-      <span class="permalink">
-      <a href="../../../it/cwmp/testing/VerticleTesting.html#afterAbs():Unit" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">afterAbs</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      
-      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a href="" class="extype" name="it.cwmp.testing.VerticleTesting">VerticleTesting</a> → BeforeAndAfterEach</dd></dl></div>
     </li><li name="org.scalatest.AsyncFunSpecLike#alert" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="alert:org.scalatest.Alerter"></a><a id="alert:Alerter"></a>
       <span class="permalink">
@@ -724,10 +733,10 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Assertions</dd></dl></div>
-    </li><li name="org.scalatest.BeforeAndAfter#before" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="before(fun:=&gt;Any)(implicitpos:org.scalactic.source.Position):Unit"></a><a id="before(⇒Any)(Position):Unit"></a>
+    </li><li name="it.cwmp.testing.VerticleTesting#beforeEach" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="beforeEach():Unit"></a>
       <span class="permalink">
-      <a href="../../../it/cwmp/testing/VerticleTesting.html#before(fun:=&gt;Any)(implicitpos:org.scalactic.source.Position):Unit" title="Permalink">
+      <a href="../../../it/cwmp/testing/VerticleTesting.html#beforeEach():Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -736,26 +745,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">before</span><span class="params">(<span name="fun">fun: ⇒ <span class="extype" name="scala.Any">Any</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="pos">pos: <span class="extype" name="org.scalactic.source.Position">Position</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">beforeEach</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>BeforeAndAfter</dd></dl></div>
-    </li><li name="it.cwmp.testing.VerticleTesting#beforeAbs" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="beforeAbs():Unit"></a>
-      <span class="permalink">
-      <a href="../../../it/cwmp/testing/VerticleTesting.html#beforeAbs():Unit" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">beforeAbs</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      
-      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a href="" class="extype" name="it.cwmp.testing.VerticleTesting">VerticleTesting</a> → BeforeAndAfterEach</dd></dl></div>
     </li><li name="org.scalatest.AsyncFunSpecLike#behave" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="behave:org.scalatest.words.BehaveWord"></a><a id="behave:BehaveWord"></a>
       <span class="permalink">
@@ -1598,7 +1591,7 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Suite</dd></dl></div>
-    </li><li name="org.scalatest.BeforeAndAfter#run" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+    </li><li name="org.scalatest.AsyncFunSpecLike#run" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="run(testName:Option[String],args:org.scalatest.Args):org.scalatest.Status"></a><a id="run(Option[String],Args):Status"></a>
       <span class="permalink">
       <a href="../../../it/cwmp/testing/VerticleTesting.html#run(testName:Option[String],args:org.scalatest.Args):org.scalatest.Status" title="Permalink">
@@ -1613,7 +1606,7 @@
         <span class="name">run</span><span class="params">(<span name="testName">testName: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="args">args: <span class="extype" name="org.scalatest.Args">Args</span></span>)</span><span class="result">: <span class="extype" name="org.scalatest.Status">Status</span></span>
       </span>
       
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>BeforeAndAfter → SuiteMixin</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AsyncFunSpecLike → Suite</dd></dl></div>
     </li><li name="org.scalatest.Suite#runNestedSuites" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="runNestedSuites(args:org.scalatest.Args):org.scalatest.Status"></a><a id="runNestedSuites(Args):Status"></a>
       <span class="permalink">
@@ -1630,7 +1623,7 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Suite</dd></dl></div>
-    </li><li name="org.scalatest.BeforeAndAfter#runTest" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+    </li><li name="org.scalatest.BeforeAndAfterEach#runTest" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="runTest(testName:String,args:org.scalatest.Args):org.scalatest.Status"></a><a id="runTest(String,Args):Status"></a>
       <span class="permalink">
       <a href="../../../it/cwmp/testing/VerticleTesting.html#runTest(testName:String,args:org.scalatest.Args):org.scalatest.Status" title="Permalink">
@@ -1645,7 +1638,7 @@
         <span class="name">runTest</span><span class="params">(<span name="testName">testName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="args">args: <span class="extype" name="org.scalatest.Args">Args</span></span>)</span><span class="result">: <span class="extype" name="org.scalatest.Status">Status</span></span>
       </span>
       
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>BeforeAndAfter → SuiteMixin</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>BeforeAndAfterEach → SuiteMixin</dd></dl></div>
     </li><li name="org.scalatest.AsyncFunSpecLike#runTests" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="runTests(testName:Option[String],args:org.scalatest.Args):org.scalatest.Status"></a><a id="runTests(Option[String],Args):Status"></a>
       <span class="permalink">
@@ -1854,7 +1847,7 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TripleEquals → TripleEqualsSupport</dd></dl></div>
-    </li><li name="it.cwmp.testing.VerticleTesting#vertx" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="it.cwmp.testing.VertxTest#vertx" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="vertx:io.vertx.scala.core.Vertx"></a><a id="vertx:Vertx"></a>
       <span class="permalink">
       <a href="../../../it/cwmp/testing/VerticleTesting.html#vertx:io.vertx.scala.core.Vertx" title="Permalink">
@@ -1869,8 +1862,8 @@
         <span class="name">vertx</span><span class="result">: <span class="extype" name="io.vertx.scala.core.Vertx">Vertx</span></span>
       </span>
       
-      
-    </li><li name="it.cwmp.testing.VerticleTesting#vertxExecutionContext" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="VertxTest.html" class="extype" name="it.cwmp.testing.VertxTest">VertxTest</a></dd></dl></div>
+    </li><li name="it.cwmp.testing.VertxTest#vertxExecutionContext" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="vertxExecutionContext:io.vertx.lang.scala.VertxExecutionContext"></a><a id="vertxExecutionContext:VertxExecutionContext"></a>
       <span class="permalink">
       <a href="../../../it/cwmp/testing/VerticleTesting.html#vertxExecutionContext:io.vertx.lang.scala.VertxExecutionContext" title="Permalink">
@@ -1885,7 +1878,7 @@
         <span class="name">vertxExecutionContext</span><span class="result">: <span class="extype" name="io.vertx.lang.scala.VertxExecutionContext">VertxExecutionContext</span></span>
       </span>
       
-      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="VertxTest.html" class="extype" name="it.cwmp.testing.VertxTest">VertxTest</a></dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <span class="permalink">
@@ -2037,10 +2030,12 @@
         </div>
 
         <div id="inheritedMembers">
-        <div class="parent" name="org.scalatest.BeforeAndAfter">
-              <h3>Inherited from <span class="extype" name="org.scalatest.BeforeAndAfter">BeforeAndAfter</span></h3>
+        <div class="parent" name="org.scalatest.BeforeAndAfterEach">
+              <h3>Inherited from <span class="extype" name="org.scalatest.BeforeAndAfterEach">BeforeAndAfterEach</span></h3>
             </div><div class="parent" name="org.scalatest.SuiteMixin">
               <h3>Inherited from <span class="extype" name="org.scalatest.SuiteMixin">SuiteMixin</span></h3>
+            </div><div class="parent" name="it.cwmp.testing.VertxTest">
+              <h3>Inherited from <a href="VertxTest.html" class="extype" name="it.cwmp.testing.VertxTest">VertxTest</a></h3>
             </div><div class="parent" name="org.scalatest.AsyncFunSpec">
               <h3>Inherited from <span class="extype" name="org.scalatest.AsyncFunSpec">AsyncFunSpec</span></h3>
             </div><div class="parent" name="org.scalatest.AsyncFunSpecLike">

@@ -118,6 +118,10 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="it.cwmp">cwmp</a></dd></dl></div>
     </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="trait" href="Address.html" title="A trait describing an address"></a>
+                        <a href="Address.html" title="A trait describing an address">Address</a>
+                      </li><li class="current-entities indented3">
                         <a class="object" href="Room$.html" title="Companion object"></a>
                         <a class="trait" href="" title="Trait that describes the Room"></a>
                         <a href="" title="Trait that describes the Room">Room</a>
@@ -210,7 +214,23 @@
 
         <div class="values members">
               <h3>Abstract Value Members</h3>
-              <ol><li name="it.cwmp.model.Room#name" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+              <ol><li name="it.cwmp.model.Room#identifier" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="identifier:String"></a>
+      <span class="permalink">
+      <a href="../../../it/cwmp/model/Room.html#identifier:String" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">identifier</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      
+      
+    </li><li name="it.cwmp.model.Room#name" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="name:String"></a>
       <span class="permalink">
       <a href="../../../it/cwmp/model/Room.html#name:String" title="Permalink">
@@ -226,10 +246,10 @@
       </span>
       
       
-    </li><li name="it.cwmp.model.Room#participants" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="participants:Seq[it.cwmp.model.User]"></a><a id="participants:Seq[User]"></a>
+    </li><li name="it.cwmp.model.Room#neededPlayersNumber" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="neededPlayersNumber:Int"></a>
       <span class="permalink">
-      <a href="../../../it/cwmp/model/Room.html#participants:Seq[it.cwmp.model.User]" title="Permalink">
+      <a href="../../../it/cwmp/model/Room.html#neededPlayersNumber:Int" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -238,7 +258,23 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">participants</span><span class="result">: <span class="extype" name="scala.Seq">Seq</span>[<a href="User.html" class="extype" name="it.cwmp.model.User">User</a>]</span>
+        <span class="name">neededPlayersNumber</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      
+      
+    </li><li name="it.cwmp.model.Room#participants" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="participants:Seq[it.cwmp.model.Userwithit.cwmp.model.Address]"></a><a id="participants:Seq[UserwithAddress]"></a>
+      <span class="permalink">
+      <a href="../../../it/cwmp/model/Room.html#participants:Seq[it.cwmp.model.Userwithit.cwmp.model.Address]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">participants</span><span class="result">: <span class="extype" name="scala.Seq">Seq</span>[<a href="User.html" class="extype" name="it.cwmp.model.User">User</a> with <a href="Address.html" class="extype" name="it.cwmp.model.Address">Address</a>]</span>
       </span>
       
       
