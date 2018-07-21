@@ -5,7 +5,7 @@ env:
 script:
   - './gradlew'
 after_success:
-  - 'bash scripts/upload_docs.sh'
+  - 'bash scripts/commit_and_upload.sh -r iugin/pps-17-cw-mp-tests -b MASTER -s /latest-docs/scala -d scala'
 deploy:
   provider: releases
   api-key: $GITHUB_API_KEY
