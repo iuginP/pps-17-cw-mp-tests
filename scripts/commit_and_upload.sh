@@ -42,10 +42,14 @@ if [ -z "${SOURCE}" ]; then printf "${RED}Source folder filter unspecified.${NC}
 if [ -z "${DESTINATION}" ]; then printf "${RED}Destination folder unspecified.${NC}\n"; fi
 if [ -z "${REPOSITORY}" ]; then printf "${RED}Repository unspecified.${NC}\n"; fi
 
+echo "primo"
+
 if [ ! -z "${BRANCH}" ] &&
  [ ! -z "${SOURCE}" ] &&
  [ ! -z "${DESTINATION}" ] &&
  [ ! -z "${REPOSITORY}" ]; then
+		
+		echo "secondo"
 
     if [ -n "${GITHUB_API_KEY}" ]
       [ "${TRAVIS_PULL_REQUEST}" == "false" ] &&
