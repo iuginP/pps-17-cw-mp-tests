@@ -101,10 +101,10 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../index.html" class="extype" name="it">it</a></dd></dl></div>
-    </li><li name="it.cwmp.authentication" visbl="pub" class="indented3 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="authentication"></a><a id="authentication:authentication"></a>
+    </li><li name="it.cwmp.exceptions" visbl="pub" class="indented3 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="exceptions"></a><a id="exceptions:exceptions"></a>
       <span class="permalink">
-      <a href="../../it/cwmp/index.html#authentication" title="Permalink">
+      <a href="../../it/cwmp/index.html#exceptions" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -113,7 +113,7 @@
         <span class="kind">package</span>
       </span>
       <span class="symbol">
-        <a title="" href="../authentication/index.html"><span class="name">authentication</span></a>
+        <a title="" href="../exceptions/index.html"><span class="name">exceptions</span></a>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="it.cwmp">cwmp</a></dd></dl></div>
@@ -134,6 +134,14 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="it.cwmp">cwmp</a></dd></dl></div>
     </li><li class="current-entities indented3">
+                        <a class="object" href="Address$.html" title="Companion Object"></a>
+                        <a class="trait" href="Address.html" title="A trait describing an address"></a>
+                        <a href="Address.html" title="A trait describing an address">Address</a>
+                      </li><li class="current-entities indented3">
+                        <a class="object" href="Participant$.html" title="Companion object"></a>
+                        <a class="trait" href="Participant.html" title="A trait that describes a participant of a game Room"></a>
+                        <a href="Participant.html" title="A trait that describes a participant of a game Room">Participant</a>
+                      </li><li class="current-entities indented3">
                         <a class="object" href="Room$.html" title="Companion object"></a>
                         <a class="trait" href="Room.html" title="Trait that describes the Room"></a>
                         <a href="Room.html" title="Trait that describes the Room">Room</a>
@@ -141,7 +149,23 @@
                         <a class="object" href="User$.html" title="Companion object"></a>
                         <a class="trait" href="User.html" title="A trait describing the user"></a>
                         <a href="User.html" title="A trait describing the user">User</a>
-                      </li><li name="it.cwmp.utils" visbl="pub" class="indented3 " data-isabs="false" fullComment="yes" group="Ungrouped">
+                      </li><li name="it.cwmp.services" visbl="pub" class="indented3 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="services"></a><a id="services:services"></a>
+      <span class="permalink">
+      <a href="../../it/cwmp/index.html#services" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../services/index.html"><span class="name">services</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="it.cwmp">cwmp</a></dd></dl></div>
+    </li><li name="it.cwmp.utils" visbl="pub" class="indented3 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="utils"></a><a id="utils:utils"></a>
       <span class="permalink">
       <a href="../../it/cwmp/index.html#utils" title="Permalink">
@@ -220,7 +244,41 @@
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="it.cwmp.model.Room" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+              <ol><li name="it.cwmp.model.Address" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="AddressextendsAnyRef"></a><a id="Address:Address"></a>
+      <span class="permalink">
+      <a href="../../../it/cwmp/model/index.html#AddressextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="A trait describing an address" href="Address.html"><span class="name">Address</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">A trait describing an address
+</p>
+    </li><li name="it.cwmp.model.Participant" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="ParticipantextendsUserwithAddress"></a><a id="Participant:Participant"></a>
+      <span class="permalink">
+      <a href="../../../it/cwmp/model/index.html#ParticipantextendsUserwithAddress" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="A trait that describes a participant of a game Room" href="Participant.html"><span class="name">Participant</span></a><span class="result"> extends <a href="User.html" class="extype" name="it.cwmp.model.User">User</a> with <a href="Address.html" class="extype" name="it.cwmp.model.Address">Address</a></span>
+      </span>
+      
+      <p class="shortcomment cmt">A trait that describes a participant of a game Room
+</p>
+    </li><li name="it.cwmp.model.Room" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="RoomextendsAnyRef"></a><a id="Room:Room"></a>
       <span class="permalink">
       <a href="../../../it/cwmp/model/index.html#RoomextendsAnyRef" title="Permalink">
@@ -245,7 +303,7 @@
       </a>
     </span>
       <span class="modifier_kind">
-        <span class="modifier">sealed </span>
+        <span class="modifier"></span>
         <span class="kind">trait</span>
       </span>
       <span class="symbol">
@@ -262,7 +320,41 @@
         <div class="values members">
               <h3>Value Members</h3>
               <ol>
-                <li name="it.cwmp.model.Room" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+                <li name="it.cwmp.model.Address" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Address"></a><a id="Address:Address"></a>
+      <span class="permalink">
+      <a href="../../../it/cwmp/model/index.html#Address" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="Companion Object" href="Address$.html"><span class="name">Address</span></a>
+      </span>
+      
+      <p class="shortcomment cmt">Companion Object
+</p>
+    </li><li name="it.cwmp.model.Participant" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Participant"></a><a id="Participant:Participant"></a>
+      <span class="permalink">
+      <a href="../../../it/cwmp/model/index.html#Participant" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="Companion object" href="Participant$.html"><span class="name">Participant</span></a>
+      </span>
+      
+      <p class="shortcomment cmt">Companion object
+</p>
+    </li><li name="it.cwmp.model.Room" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="Room"></a><a id="Room:Room"></a>
       <span class="permalink">
       <a href="../../../it/cwmp/model/index.html#Room" title="Permalink">
