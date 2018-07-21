@@ -154,8 +154,11 @@ gradle-app.setting
 # Cache of project
 .gradletasknamecache
 
-# doc
-**/latest-docs/
+# Vertx cache
+**/.vertx/
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
+
+# SBT builds
+**/target/

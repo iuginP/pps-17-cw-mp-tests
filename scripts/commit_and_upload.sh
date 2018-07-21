@@ -42,18 +42,10 @@ if [ -z "${SOURCE}" ]; then printf "${RED}Source folder filter unspecified.${NC}
 if [ -z "${DESTINATION}" ]; then printf "${RED}Destination folder unspecified.${NC}\n"; fi
 if [ -z "${REPOSITORY}" ]; then printf "${RED}Repository unspecified.${NC}\n"; fi
 
-echo "primo"
-
 if [ ! -z "${BRANCH}" ] &&
  [ ! -z "${SOURCE}" ] &&
  [ ! -z "${DESTINATION}" ] &&
  [ ! -z "${REPOSITORY}" ]; then
-		
-		echo "secondo"
-		echo "${GITHUB_API_KEY}"
-		echo "${TRAVIS_PULL_REQUEST}"
-		echo "${TRAVIS_BRANCH}"
-		echo "${BRANCH}"
 
     if [ -n "${GITHUB_API_KEY}" ]
       [ "${TRAVIS_PULL_REQUEST}" == "false" ] &&
@@ -61,7 +53,7 @@ if [ ! -z "${BRANCH}" ] &&
 
         echo -e "Publishing ${DESTINATION} into ${REPOSITORY} (${BRANCH}) from all ${SOURCE}:\n"
         mkdir $HOME/git_upload_tmp
-        find -path "*/$SOURCE" -print0 | while IFS= read -r -d $'\0' line; do ls $line; cp -r $line/* $HOME/git_upload_tmp; done;
+        find -path "*/${SOURCE}" -print0 | while IFS= read -r -d $'\0' line; do ls $line; cp -r $line/* $HOME/git_upload_tmp; done;
         cd $HOME
         git config --global user.email "travis@travis-ci.org"
         git config --global user.name "travis-ci"
