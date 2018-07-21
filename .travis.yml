@@ -1,11 +1,11 @@
 language: scala
 env:
   global:
-    - secure: "iO+XNd+oJ2Bp1VqIKHfjMwN+zPgvB357C+MO1Xw6BxbDv7hp76yNi3IanCBwM+rJVrc3AVtimOg+0QqJUa6BtPNNeSCMr5hny4UbJkWl9RPKJ7L5xT6hQFvVxmUAHkay2XMcwHmw091sbM5d/vfCbqYrBsmdqH7agyyo8xyEJ4RdY3ULh73QY88cVZOZGWhdYOw4ntkr7ugOvKon1K7Zp5zLXN2X19JmBMyAitvxlWfsiaaDVDz6OfgscfuREse4R/q70RvEUW3tPDswM5qFeJRp0t1WHyMFW9ZvRbspMFeu/vqcn1kJEIFT1JfUD/7CespAN1Ku+CXYMtel76LFuhtGkXBLtnREHIOFkW3/DfO1T4daRrR+4SmpGd6sC6CzcwvaIBtj+65NPuVg3Jvoy6t4s7p5SzFf/C4013jYTbjnDyuZVKb6VZXiFtClQbcdVIE0GJp9buSlJYvnYvAGNHBMD+RRPGhuS9o/MOfJC+xAOE/vMN8p4pQZbvT86NxvesrFyA1eelg2UGIRy+zmUjys82Z/Y90PMsCr3tzJQdnif5nlmoPdkHr9kWylH+K4T4V6ca5hdOSqP0+EL6Vflz4UO3zhkmXaLnGpKCAOQTIjfYm70hnhFVidbLis9PMKilZvU0Ql+X1UVZ9juckFQAcMVieBcmm/UQUYo3PuaQs="
+    - secure: "aKodUbjXBS1Z6lIAMCgdSbuLY2SioVrnn3MqMkzp83xsibLbOlPSfEtdCGCdYXz9dzivtGu4u1yLltXWtYNgwGlVxevjOcapDC+QkLkZDExrhEyMb2Or6SObm7//XVT9pyhhXke2sun/gM04+OuBY0yAxnZEBONIaWD5WYHiLhnImTQaWY9xdn+tkNQCFJHySUYEgJ+ndT+/Yt9JDpAIJ5jP9wGlHT4GPY/3eqmMsdy895ceVGqkX6wdQstfyE90Sx8fqEp40pPHX1zkHTGlKi1H2O9SwaN2QyPyf77Qlb7XnCji2l490q9YE+FB/PSa3AYQzszkAqSJ9tcxh+eUsP+s9aFHyLZksfLUDppG7vJGjAZFbygnjDiFSDgTOaMiqVCyn7/5dnIVzaVOFWEP0cPgjKgCvaMGvxhiAAzW+GBYlgFErF6lh8/Cundz2OyTvq+hzYaQr19DbaMAcXkv0A66AOUgN6T43riZTh1TUKA4edOu7B6hTEWBATuatoUB09XP4Y+NtR2Uhbpu7q9PrA/ikVp7cmDH7n5xQCRmQuDS49capcaOvYUpna17ELv6fgWtXpzg8qsWlk54SSAs0ccol6SmS0NLVSgv5jmjABSGmxjLCf7QA34nhhOchyKWo0PCAuFEkw+P3RYaGYLLle/DuiF6PNPk+ruH39tMGvQ="
 script:
   - './gradlew'
 after_success:
-  - 'bash scripts/commit_and_upload.sh -r iugin/pps-17-cw-mp-tests -b MASTER -s /latest-docs/scala -d scala'
+  - 'bash scripts/commit_and_upload.sh -r iuginP/pps-17-cw-mp-tests -b MASTER -s /latest-docs/scala -d scala'
 deploy:
   provider: releases
   api-key: $GITHUB_API_KEY
