@@ -50,6 +50,10 @@ if [ ! -z "${BRANCH}" ] &&
  [ ! -z "${REPOSITORY}" ]; then
 		
 		echo "secondo"
+		echo "${GITHUB_API_KEY}"
+		echo "${TRAVIS_PULL_REQUEST}"
+		echo "${TRAVIS_BRANCH}"
+		echo "${BRANCH}"
 
     if [ -n "${GITHUB_API_KEY}" ]
       [ "${TRAVIS_PULL_REQUEST}" == "false" ] &&
