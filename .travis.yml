@@ -1,6 +1,19 @@
 language: scala
 env:
   global:
-    - secure: iKV5GCxJh9hbQYTHM7cbcwYs0qGwEuIKVGPM/MPgvoeaMKbdrVatP+n1yhB5TSIrvLjssHu7VTQgxRQWgmS5t2s5RuTedfKlh6FtPvAByAwOiOVEU3N0Rj4TZ8PbrJOKzqY37fP13H3LeYgfV//DY3RBglRftvzTm1bKlTHmLfLD+WukC1LbbkYYu4brAGrQoiiNq2k4K6lVqdjL6HW4QBnL64vt72Y/gwXPc4DaODCZ956sxFGlA4UvltAJuge6KxdpaAZtO9SPE9HscAYEZzN6GV9IqFqXXR0v1LbRtbm5fDdFhjrqgIQUMz9VBhwUDJeBPC+IWCjMvEfIaRU18w9Vk3OVfu3+70RST8QcTCpk6xRW0AAmWNwLBS+gFknZX13e2j1VlhKzXk7Zqxib5RQqJX3lBOwKIeS+KO2wyq0z83/jvJdeewyfOroi/z/LK/NT9LvWs8VNInUw0lC/PKNSl2yCN7kn8dEAIZTZeGs1r/mMBPaWbh2oGGGi2oBk4aZYSIqhv9vKKW6WU13desFPeNOjoRsViwrW+77SKUrBlXaGgjPT4nsWva/ltnPIE1/J2t2LD3PTSyCsSFg6FgUiYkKjaYamglbmoWQ1jTqfK9fnXKZFsUdYJS7ubYI8lAg4rMEmPfLRvq0cjEWPXVALAbUim3sui/HuUczaBlM=
+    - secure: "aKodUbjXBS1Z6lIAMCgdSbuLY2SioVrnn3MqMkzp83xsibLbOlPSfEtdCGCdYXz9dzivtGu4u1yLltXWtYNgwGlVxevjOcapDC+QkLkZDExrhEyMb2Or6SObm7//XVT9pyhhXke2sun/gM04+OuBY0yAxnZEBONIaWD5WYHiLhnImTQaWY9xdn+tkNQCFJHySUYEgJ+ndT+/Yt9JDpAIJ5jP9wGlHT4GPY/3eqmMsdy895ceVGqkX6wdQstfyE90Sx8fqEp40pPHX1zkHTGlKi1H2O9SwaN2QyPyf77Qlb7XnCji2l490q9YE+FB/PSa3AYQzszkAqSJ9tcxh+eUsP+s9aFHyLZksfLUDppG7vJGjAZFbygnjDiFSDgTOaMiqVCyn7/5dnIVzaVOFWEP0cPgjKgCvaMGvxhiAAzW+GBYlgFErF6lh8/Cundz2OyTvq+hzYaQr19DbaMAcXkv0A66AOUgN6T43riZTh1TUKA4edOu7B6hTEWBATuatoUB09XP4Y+NtR2Uhbpu7q9PrA/ikVp7cmDH7n5xQCRmQuDS49capcaOvYUpna17ELv6fgWtXpzg8qsWlk54SSAs0ccol6SmS0NLVSgv5jmjABSGmxjLCf7QA34nhhOchyKWo0PCAuFEkw+P3RYaGYLLle/DuiF6PNPk+ruH39tMGvQ="
+script:
+  - './gradlew'
 after_success:
-  - 'bash scripts/upload_docs.sh'
+  - 'bash scripts/commit_and_upload.sh -r iuginP/pps-17-cw-mp-tests -b master -s latest-docs/scala -d scala'
+  - 'bash scripts/commit_and_upload.sh -r iuginP/pps-17-cw-mp-tests -b master -s latest-docs/java -d java'
+  - 'bash scripts/commit_and_upload.sh -r iuginP/pps-17-cw-mp -b master -s build/reports/scoverage -d report scoverage'
+deploy:
+  provider: releases
+  api-key: $GITHUB_API_KEY
+  skip_cleanup: true
+  file_glob: true
+  file: production/*
+  on:
+    repo: iuginP/pps-17-cw-mp-tests
+    tags: true
