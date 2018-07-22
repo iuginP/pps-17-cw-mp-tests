@@ -1,0 +1,1097 @@
+<html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title id="title">
+          src/main/scala/it/cwmp/client/model/game/impl/Cell.scala.html
+        </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/css/theme.default.min.css" type="text/css"/><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/js/jquery.tablesorter.min.js"></script><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css"/><script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script><script type="text/javascript">
+        $(document).ready(function() {$(".tablesorter").tablesorter();});
+      </script>
+        <style>
+          table.codegrid { font-family: monospace; font-size: 12px; width: auto!important; }table.statementlist { width: auto!important; font-size: 13px; } table.codegrid td { padding: 0!important; border: 0!important } table td.linenumber { width: 40px!important; } 
+        </style>
+      </head>
+      <body style="font-family: monospace;">
+        <ul class="nav nav-tabs">
+          <li>
+            <a href="#codegrid" data-toggle="tab">Codegrid</a>
+          </li>
+          <li>
+            <a href="#statementlist" data-toggle="tab">Statement List</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="codegrid">
+            <pre style='font-size: 12pt; font-family: courier;'>1 <span style=''>package it.cwmp.client.model.game.impl
+</span>2 <span style=''>
+</span>3 <span style=''>import java.time.Duration
+</span>4 <span style=''>import java.util.Objects._
+</span>5 <span style=''>
+</span>6 <span style=''>import it.cwmp.client.model.game._
+</span>7 <span style=''>import it.cwmp.model.User
+</span>8 <span style=''>
+</span>9 <span style=''>/**
+</span>10 <span style=''>  * Default implementation of game Cell
+</span>11 <span style=''>  *
+</span>12 <span style=''>  * @param owner    the owner of the cell
+</span>13 <span style=''>  * @param energy   the energy of the cell
+</span>14 <span style=''>  * @param position the position of the cell
+</span>15 <span style=''>  * @author Enrico Siboni
+</span>16 <span style=''>  */
+</span>17 <span style=''>case class Cell(owner: User,
+</span>18 <span style=''>                position: Point,
+</span>19 <span style=''>                energy: Double) extends Character[User, Point, Double] {
+</span>20 <span style=''>
+</span>21 <span style=''>  </span><span style='background: #AEF1AE'>requireNonNull(owner, &quot;User owner must not be null&quot;)</span><span style=''>
+</span>22 <span style=''>  </span><span style='background: #AEF1AE'>requireNonNull(position, &quot;Position must not be null&quot;)</span><span style=''>
+</span>23 <span style=''>  </span><span style='background: #AEF1AE'>require(energy &gt; 0, &quot;Energy must be positive&quot;)</span><span style=''>
+</span>24 <span style=''>}
+</span>25 <span style=''>
+</span>26 <span style=''>
+</span>27 <span style=''>/**
+</span>28 <span style=''>  * Companion object
+</span>29 <span style=''>  */
+</span>30 <span style=''>object Cell {
+</span>31 <span style=''>
+</span>32 <span style=''>  /**
+</span>33 <span style=''>    * The energy that a cell has when is born
+</span>34 <span style=''>    */
+</span>35 <span style=''>  val whenBornEnergy = </span><span style='background: #AEF1AE'>20d</span><span style=''>
+</span>36 <span style=''>
+</span>37 <span style=''>  /**
+</span>38 <span style=''>    * Coverts this amount of time to an energy unit
+</span>39 <span style=''>    */
+</span>40 <span style=''>  val TIME_TO_ENERGY_CONVERSION_RATE = </span><span style='background: #AEF1AE'>1000d</span><span style=''>
+</span>41 <span style=''>
+</span>42 <span style=''>  /**
+</span>43 <span style=''>    * The default evolution strategy for cells
+</span>44 <span style=''>    *
+</span>45 <span style=''>    * adds 1 to energy each second
+</span>46 <span style=''>    */
+</span>47 <span style=''>  val defaultEvolutionStrategy: EvolutionStrategy[Cell, Duration] = (cell: Cell, elapsedTime: Duration) =&gt; {
+</span>48 <span style=''>    </span><span style='background: #AEF1AE'>cell ++ (elapsedTime.toMillis / TIME_TO_ENERGY_CONVERSION_RATE)</span><span style=''>
+</span>49 <span style=''>  }
+</span>50 <span style=''>
+</span>51 <span style=''>  /**
+</span>52 <span style=''>    * Returns the distance between two cells
+</span>53 <span style=''>    *
+</span>54 <span style=''>    * @param cell1 the first cell
+</span>55 <span style=''>    * @param cell2 the second cell
+</span>56 <span style=''>    * @return the distance
+</span>57 <span style=''>    */
+</span>58 <span style=''>  def distance(cell1: Cell, cell2: Cell): Long = {
+</span>59 <span style=''>    </span><span style='background: #AEF1AE'>GeometricUtils.distance(cell1.position, cell2.position).toLong</span><span style=''>
+</span>60 <span style=''>  }
+</span>61 <span style=''>
+</span>62 <span style=''>  /**
+</span>63 <span style=''>    * @return true if provided cells have matching owner and position
+</span>64 <span style=''>    */
+</span>65 <span style=''>  def ownerAndPositionMatch(cell1: Cell, cell2: Cell): Boolean =
+</span>66 <span style=''>    </span><span style='background: #AEF1AE'>cell1.owner == cell2.owner &amp;&amp; cell1.position == cell2.position</span><span style=''>
+</span>67 <span style=''>
+</span>68 <span style=''>  /**
+</span>69 <span style=''>    * A class to manipulate cells
+</span>70 <span style=''>    *
+</span>71 <span style=''>    * @param cell the cell to manipulate
+</span>72 <span style=''>    */
+</span>73 <span style=''>  implicit class CellManipulator(cell: Cell) {
+</span>74 <span style=''>
+</span>75 <span style=''>    /**
+</span>76 <span style=''>      * Evolves the cell according to elapsedTime and evolutionStrategy
+</span>77 <span style=''>      *
+</span>78 <span style=''>      * @param elapsedTime           elapsedTime to consider
+</span>79 <span style=''>      * @param cellEvolutionStrategy the evolution strategy to consider
+</span>80 <span style=''>      * @return
+</span>81 <span style=''>      */
+</span>82 <span style=''>    def evolve(elapsedTime: Duration, cellEvolutionStrategy: EvolutionStrategy[Cell, Duration] = defaultEvolutionStrategy): Cell =
+</span>83 <span style=''>      </span><span style='background: #AEF1AE'>cellEvolutionStrategy(cell, elapsedTime)</span><span style=''>
+</span>84 <span style=''>
+</span>85 <span style=''>    /**
+</span>86 <span style=''>      * Creates a new cell with energy reduced
+</span>87 <span style=''>      *
+</span>88 <span style=''>      * @param energyReduction the amount of energy to remove
+</span>89 <span style=''>      * @return the cell with reduced energy
+</span>90 <span style=''>      */
+</span>91 <span style=''>    def --(energyReduction: Double): Cell = {
+</span>92 <span style=''>      </span><span style='background: #AEF1AE'>require(energyReduction &gt;= 0, &quot;Energy decrement should be positive&quot;)</span><span style=''>
+</span>93 <span style=''>      if (</span><span style='background: #AEF1AE'>energyReduction == 0</span><span style=''>) </span><span style='background: #AEF1AE'>cell</span><span style=''>
+</span>94 <span style=''>      else </span><span style='background: #AEF1AE'>Cell(cell.owner, cell.position, cell.energy - energyReduction)</span><span style=''>
+</span>95 <span style=''>    }
+</span>96 <span style=''>
+</span>97 <span style=''>    /**
+</span>98 <span style=''>      * Creates a new cell with energy increased
+</span>99 <span style=''>      *
+</span>100 <span style=''>      * @param energyIncrement the increment to add to energy
+</span>101 <span style=''>      * @return the cell with incremented energy
+</span>102 <span style=''>      */
+</span>103 <span style=''>    def ++(energyIncrement: Double): Cell = {
+</span>104 <span style=''>      </span><span style='background: #AEF1AE'>require(energyIncrement &gt;= 0, &quot;Energy increment should be positive&quot;)</span><span style=''>
+</span>105 <span style=''>      if (</span><span style='background: #AEF1AE'>energyIncrement == 0</span><span style=''>) </span><span style='background: #AEF1AE'>cell</span><span style=''>
+</span>106 <span style=''>      else </span><span style='background: #AEF1AE'>Cell(cell.owner, cell.position, cell.energy + energyIncrement)</span><span style=''>
+</span>107 <span style=''>    }
+</span>108 <span style=''>
+</span>109 <span style=''>  }
+</span>110 <span style=''>
+</span>111 <span style=''>}
+</span></pre>
+          </div>
+          <div class="tab-pane" id="statementlist">
+            <table cellspacing="0" cellpadding="0" class="table statementlist">
+      <tr>
+        <th>Line</th>
+        <th>Stmt Id</th>
+        <th>Pos</th>
+        <th>Tree</th>
+        <th>Symbol</th>
+        <th>Code</th>
+      </tr><tr>
+        <td>
+          21
+        </td>
+        <td>
+          579
+        </td>
+        <td>
+          525
+          -
+          554
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;User owner must not be null&quot;
+        </td>
+      </tr><tr>
+        <td>
+          21
+        </td>
+        <td>
+          578
+        </td>
+        <td>
+          518
+          -
+          523
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.owner
+        </td>
+        <td style="background: #AEF1AE">
+          Cell.this.owner
+        </td>
+      </tr><tr>
+        <td>
+          21
+        </td>
+        <td>
+          580
+        </td>
+        <td>
+          503
+          -
+          555
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.util.Objects.requireNonNull
+        </td>
+        <td style="background: #AEF1AE">
+          java.util.Objects.requireNonNull[it.cwmp.model.User](Cell.this.owner, &quot;User owner must not be null&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          22
+        </td>
+        <td>
+          582
+        </td>
+        <td>
+          583
+          -
+          610
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;Position must not be null&quot;
+        </td>
+      </tr><tr>
+        <td>
+          22
+        </td>
+        <td>
+          581
+        </td>
+        <td>
+          573
+          -
+          581
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.position
+        </td>
+        <td style="background: #AEF1AE">
+          Cell.this.position
+        </td>
+      </tr><tr>
+        <td>
+          22
+        </td>
+        <td>
+          583
+        </td>
+        <td>
+          558
+          -
+          611
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.util.Objects.requireNonNull
+        </td>
+        <td style="background: #AEF1AE">
+          java.util.Objects.requireNonNull[it.cwmp.client.model.game.impl.Point](Cell.this.position, &quot;Position must not be null&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          23
+        </td>
+        <td>
+          585
+        </td>
+        <td>
+          634
+          -
+          659
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;Energy must be positive&quot;
+        </td>
+      </tr><tr>
+        <td>
+          23
+        </td>
+        <td>
+          584
+        </td>
+        <td>
+          622
+          -
+          632
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Double.&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          Cell.this.energy.&gt;(0)
+        </td>
+      </tr><tr>
+        <td>
+          23
+        </td>
+        <td>
+          586
+        </td>
+        <td>
+          614
+          -
+          660
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Predef.require
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Predef.require(Cell.this.energy.&gt;(0), &quot;Energy must be positive&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          35
+        </td>
+        <td>
+          587
+        </td>
+        <td>
+          792
+          -
+          795
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          20.0
+        </td>
+      </tr><tr>
+        <td>
+          40
+        </td>
+        <td>
+          588
+        </td>
+        <td>
+          901
+          -
+          906
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          1000.0
+        </td>
+      </tr><tr>
+        <td>
+          48
+        </td>
+        <td>
+          591
+        </td>
+        <td>
+          1122
+          -
+          1185
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.CellManipulator.++
+        </td>
+        <td style="background: #AEF1AE">
+          Cell.this.CellManipulator(cell).++(elapsedTime.toMillis()./(Cell.this.TIME_TO_ENERGY_CONVERSION_RATE))
+        </td>
+      </tr><tr>
+        <td>
+          48
+        </td>
+        <td>
+          590
+        </td>
+        <td>
+          1131
+          -
+          1184
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Long./
+        </td>
+        <td style="background: #AEF1AE">
+          elapsedTime.toMillis()./(Cell.this.TIME_TO_ENERGY_CONVERSION_RATE)
+        </td>
+      </tr><tr>
+        <td>
+          48
+        </td>
+        <td>
+          589
+        </td>
+        <td>
+          1154
+          -
+          1184
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.TIME_TO_ENERGY_CONVERSION_RATE
+        </td>
+        <td style="background: #AEF1AE">
+          Cell.this.TIME_TO_ENERGY_CONVERSION_RATE
+        </td>
+      </tr><tr>
+        <td>
+          59
+        </td>
+        <td>
+          594
+        </td>
+        <td>
+          1406
+          -
+          1468
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          scala.Double.toLong
+        </td>
+        <td style="background: #AEF1AE">
+          GeometricUtils.distance(cell1.position, cell2.position).toLong
+        </td>
+      </tr><tr>
+        <td>
+          59
+        </td>
+        <td>
+          593
+        </td>
+        <td>
+          1446
+          -
+          1460
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.position
+        </td>
+        <td style="background: #AEF1AE">
+          cell2.position
+        </td>
+      </tr><tr>
+        <td>
+          59
+        </td>
+        <td>
+          592
+        </td>
+        <td>
+          1430
+          -
+          1444
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.position
+        </td>
+        <td style="background: #AEF1AE">
+          cell1.position
+        </td>
+      </tr><tr>
+        <td>
+          66
+        </td>
+        <td>
+          597
+        </td>
+        <td>
+          1656
+          -
+          1688
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.lang.Object.==
+        </td>
+        <td style="background: #AEF1AE">
+          cell1.position.==(cell2.position)
+        </td>
+      </tr><tr>
+        <td>
+          66
+        </td>
+        <td>
+          596
+        </td>
+        <td>
+          1674
+          -
+          1688
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.position
+        </td>
+        <td style="background: #AEF1AE">
+          cell2.position
+        </td>
+      </tr><tr>
+        <td>
+          66
+        </td>
+        <td>
+          595
+        </td>
+        <td>
+          1641
+          -
+          1652
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.owner
+        </td>
+        <td style="background: #AEF1AE">
+          cell2.owner
+        </td>
+      </tr><tr>
+        <td>
+          66
+        </td>
+        <td>
+          598
+        </td>
+        <td>
+          1626
+          -
+          1688
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Boolean.&amp;&amp;
+        </td>
+        <td style="background: #AEF1AE">
+          cell1.owner.==(cell2.owner).&amp;&amp;(cell1.position.==(cell2.position))
+        </td>
+      </tr><tr>
+        <td>
+          83
+        </td>
+        <td>
+          600
+        </td>
+        <td>
+          2215
+          -
+          2255
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function2.apply
+        </td>
+        <td style="background: #AEF1AE">
+          cellEvolutionStrategy.apply(CellManipulator.this.cell, elapsedTime)
+        </td>
+      </tr><tr>
+        <td>
+          83
+        </td>
+        <td>
+          599
+        </td>
+        <td>
+          2237
+          -
+          2241
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.CellManipulator.cell
+        </td>
+        <td style="background: #AEF1AE">
+          CellManipulator.this.cell
+        </td>
+      </tr><tr>
+        <td>
+          92
+        </td>
+        <td>
+          603
+        </td>
+        <td>
+          2488
+          -
+          2556
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Predef.require
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Predef.require(energyReduction.&gt;=(0), &quot;Energy decrement should be positive&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          92
+        </td>
+        <td>
+          602
+        </td>
+        <td>
+          2518
+          -
+          2555
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;Energy decrement should be positive&quot;
+        </td>
+      </tr><tr>
+        <td>
+          92
+        </td>
+        <td>
+          601
+        </td>
+        <td>
+          2496
+          -
+          2516
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Double.&gt;=
+        </td>
+        <td style="background: #AEF1AE">
+          energyReduction.&gt;=(0)
+        </td>
+      </tr><tr>
+        <td>
+          93
+        </td>
+        <td>
+          606
+        </td>
+        <td>
+          2589
+          -
+          2593
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.CellManipulator.cell
+        </td>
+        <td style="background: #AEF1AE">
+          CellManipulator.this.cell
+        </td>
+      </tr><tr>
+        <td>
+          93
+        </td>
+        <td>
+          605
+        </td>
+        <td>
+          2589
+          -
+          2593
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.CellManipulator.cell
+        </td>
+        <td style="background: #AEF1AE">
+          CellManipulator.this.cell
+        </td>
+      </tr><tr>
+        <td>
+          93
+        </td>
+        <td>
+          604
+        </td>
+        <td>
+          2567
+          -
+          2587
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Double.==
+        </td>
+        <td style="background: #AEF1AE">
+          energyReduction.==(0)
+        </td>
+      </tr><tr>
+        <td>
+          94
+        </td>
+        <td>
+          609
+        </td>
+        <td>
+          2637
+          -
+          2666
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Double.-
+        </td>
+        <td style="background: #AEF1AE">
+          CellManipulator.this.cell.energy.-(energyReduction)
+        </td>
+      </tr><tr>
+        <td>
+          94
+        </td>
+        <td>
+          608
+        </td>
+        <td>
+          2622
+          -
+          2635
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.position
+        </td>
+        <td style="background: #AEF1AE">
+          CellManipulator.this.cell.position
+        </td>
+      </tr><tr>
+        <td>
+          94
+        </td>
+        <td>
+          611
+        </td>
+        <td>
+          2605
+          -
+          2667
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.apply
+        </td>
+        <td style="background: #AEF1AE">
+          Cell.apply(CellManipulator.this.cell.owner, CellManipulator.this.cell.position, CellManipulator.this.cell.energy.-(energyReduction))
+        </td>
+      </tr><tr>
+        <td>
+          94
+        </td>
+        <td>
+          607
+        </td>
+        <td>
+          2610
+          -
+          2620
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.owner
+        </td>
+        <td style="background: #AEF1AE">
+          CellManipulator.this.cell.owner
+        </td>
+      </tr><tr>
+        <td>
+          94
+        </td>
+        <td>
+          610
+        </td>
+        <td>
+          2605
+          -
+          2667
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.apply
+        </td>
+        <td style="background: #AEF1AE">
+          Cell.apply(CellManipulator.this.cell.owner, CellManipulator.this.cell.position, CellManipulator.this.cell.energy.-(energyReduction))
+        </td>
+      </tr><tr>
+        <td>
+          104
+        </td>
+        <td>
+          612
+        </td>
+        <td>
+          2920
+          -
+          2940
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Double.&gt;=
+        </td>
+        <td style="background: #AEF1AE">
+          energyIncrement.&gt;=(0)
+        </td>
+      </tr><tr>
+        <td>
+          104
+        </td>
+        <td>
+          614
+        </td>
+        <td>
+          2912
+          -
+          2980
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Predef.require
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Predef.require(energyIncrement.&gt;=(0), &quot;Energy increment should be positive&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          104
+        </td>
+        <td>
+          613
+        </td>
+        <td>
+          2942
+          -
+          2979
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;Energy increment should be positive&quot;
+        </td>
+      </tr><tr>
+        <td>
+          105
+        </td>
+        <td>
+          615
+        </td>
+        <td>
+          2991
+          -
+          3011
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Double.==
+        </td>
+        <td style="background: #AEF1AE">
+          energyIncrement.==(0)
+        </td>
+      </tr><tr>
+        <td>
+          105
+        </td>
+        <td>
+          617
+        </td>
+        <td>
+          3013
+          -
+          3017
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.CellManipulator.cell
+        </td>
+        <td style="background: #AEF1AE">
+          CellManipulator.this.cell
+        </td>
+      </tr><tr>
+        <td>
+          105
+        </td>
+        <td>
+          616
+        </td>
+        <td>
+          3013
+          -
+          3017
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.CellManipulator.cell
+        </td>
+        <td style="background: #AEF1AE">
+          CellManipulator.this.cell
+        </td>
+      </tr><tr>
+        <td>
+          106
+        </td>
+        <td>
+          618
+        </td>
+        <td>
+          3034
+          -
+          3044
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.owner
+        </td>
+        <td style="background: #AEF1AE">
+          CellManipulator.this.cell.owner
+        </td>
+      </tr><tr>
+        <td>
+          106
+        </td>
+        <td>
+          621
+        </td>
+        <td>
+          3029
+          -
+          3091
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.apply
+        </td>
+        <td style="background: #AEF1AE">
+          Cell.apply(CellManipulator.this.cell.owner, CellManipulator.this.cell.position, CellManipulator.this.cell.energy.+(energyIncrement))
+        </td>
+      </tr><tr>
+        <td>
+          106
+        </td>
+        <td>
+          620
+        </td>
+        <td>
+          3061
+          -
+          3090
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Double.+
+        </td>
+        <td style="background: #AEF1AE">
+          CellManipulator.this.cell.energy.+(energyIncrement)
+        </td>
+      </tr><tr>
+        <td>
+          106
+        </td>
+        <td>
+          622
+        </td>
+        <td>
+          3029
+          -
+          3091
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.apply
+        </td>
+        <td style="background: #AEF1AE">
+          Cell.apply(CellManipulator.this.cell.owner, CellManipulator.this.cell.position, CellManipulator.this.cell.energy.+(energyIncrement))
+        </td>
+      </tr><tr>
+        <td>
+          106
+        </td>
+        <td>
+          619
+        </td>
+        <td>
+          3046
+          -
+          3059
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.position
+        </td>
+        <td style="background: #AEF1AE">
+          CellManipulator.this.cell.position
+        </td>
+      </tr>
+    </table>
+          </div>
+        </div>
+      </body>
+    </html>

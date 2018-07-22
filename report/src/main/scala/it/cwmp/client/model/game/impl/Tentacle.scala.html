@@ -1,0 +1,1270 @@
+<html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title id="title">
+          src/main/scala/it/cwmp/client/model/game/impl/Tentacle.scala.html
+        </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/css/theme.default.min.css" type="text/css"/><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/js/jquery.tablesorter.min.js"></script><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css"/><script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script><script type="text/javascript">
+        $(document).ready(function() {$(".tablesorter").tablesorter();});
+      </script>
+        <style>
+          table.codegrid { font-family: monospace; font-size: 12px; width: auto!important; }table.statementlist { width: auto!important; font-size: 13px; } table.codegrid td { padding: 0!important; border: 0!important } table td.linenumber { width: 40px!important; } 
+        </style>
+      </head>
+      <body style="font-family: monospace;">
+        <ul class="nav nav-tabs">
+          <li>
+            <a href="#codegrid" data-toggle="tab">Codegrid</a>
+          </li>
+          <li>
+            <a href="#statementlist" data-toggle="tab">Statement List</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="codegrid">
+            <pre style='font-size: 12pt; font-family: courier;'>1 <span style=''>package it.cwmp.client.model.game.impl
+</span>2 <span style=''>
+</span>3 <span style=''>import java.time.{Duration, Instant}
+</span>4 <span style=''>import java.util.Objects._
+</span>5 <span style=''>
+</span>6 <span style=''>import it.cwmp.client.model.game.{Attack, SizingStrategy}
+</span>7 <span style=''>
+</span>8 <span style=''>/**
+</span>9 <span style=''>  * Default implementation of cell attack
+</span>10 <span style=''>  *
+</span>11 <span style=''>  * @param from          the cell where tentacle starts
+</span>12 <span style=''>  * @param to            the cell where tentacle is directed
+</span>13 <span style=''>  * @param launchInstant the time at which the tentacle was launched
+</span>14 <span style=''>  * @author Enrico Siboni
+</span>15 <span style=''>  */
+</span>16 <span style=''>case class Tentacle(from: Cell,
+</span>17 <span style=''>                    to: Cell,
+</span>18 <span style=''>                    launchInstant: Instant)
+</span>19 <span style=''>  extends Attack[Cell, Cell, Instant] {
+</span>20 <span style=''>
+</span>21 <span style=''>  </span><span style='background: #AEF1AE'>requireNonNull(from, &quot;From cell must be not null&quot;)</span><span style=''>
+</span>22 <span style=''>  </span><span style='background: #AEF1AE'>requireNonNull(to, &quot;To cell must be not null&quot;)</span><span style=''>
+</span>23 <span style=''>  </span><span style='background: #AEF1AE'>requireNonNull(launchInstant, &quot;Launch instant must be not null&quot;)</span><span style=''>
+</span>24 <span style=''>  </span><span style='background: #AEF1AE'>require(from != to, &quot;A tentacle cannot be launched from and to same cell&quot;)</span><span style=''>
+</span>25 <span style=''>}
+</span>26 <span style=''>
+</span>27 <span style=''>/**
+</span>28 <span style=''>  * Companion object
+</span>29 <span style=''>  */
+</span>30 <span style=''>object Tentacle {
+</span>31 <span style=''>
+</span>32 <span style=''>  /**
+</span>33 <span style=''>    * Amount of time expressed in milliseconds that will be converted to a movement step of the tentacle
+</span>34 <span style=''>    */
+</span>35 <span style=''>  val TIME_TO_MOVEMENT_CONVERSION_RATE = </span><span style='background: #AEF1AE'>100</span><span style=''>
+</span>36 <span style=''>
+</span>37 <span style=''>  /**
+</span>38 <span style=''>    * Default strategy for sizing the tentacle basing decision on time
+</span>39 <span style=''>    *
+</span>40 <span style=''>    * Every [[TIME_TO_MOVEMENT_CONVERSION_RATE]] tentacle gains 1 space towards enemy
+</span>41 <span style=''>    */
+</span>42 <span style=''>  val defaultMillisToLengthStrategy: SizingStrategy[Duration, Long] =
+</span>43 <span style=''>    (elapsedTime: Duration) =&gt; </span><span style='background: #AEF1AE'>elapsedTime.toMillis / TIME_TO_MOVEMENT_CONVERSION_RATE</span><span style=''>
+</span>44 <span style=''>
+</span>45 <span style=''>  /**
+</span>46 <span style=''>    * A class to manipulate tentacle properties
+</span>47 <span style=''>    *
+</span>48 <span style=''>    * @param tentacle the tentacle to work on
+</span>49 <span style=''>    */
+</span>50 <span style=''>  implicit class TentacleManipulation(tentacle: Tentacle) {
+</span>51 <span style=''>
+</span>52 <span style=''>    private val distanceBetweenCells = </span><span style='background: #AEF1AE'>Cell.distance(tentacle.from, tentacle.to)</span><span style=''>
+</span>53 <span style=''>
+</span>54 <span style=''>    /**
+</span>55 <span style=''>      * Returns the length of the tentacle based on launch time, actualTime provided and speed of the tentacle
+</span>56 <span style=''>      *
+</span>57 <span style=''>      * @param actualInstant        actual world time
+</span>58 <span style=''>      * @param timeToLengthStrategy the strategy that decides how fast is the tentacle on reaching destination
+</span>59 <span style=''>      * @return the tentacle length
+</span>60 <span style=''>      */
+</span>61 <span style=''>    def length(actualInstant: Instant,
+</span>62 <span style=''>               timeToLengthStrategy: SizingStrategy[Duration, Long] = defaultMillisToLengthStrategy): Long = {
+</span>63 <span style=''>      </span><span style='background: #AEF1AE'>checkTentacleManipulationParameters(actualInstant, timeToLengthStrategy)</span><span style=''>
+</span>64 <span style=''>
+</span>65 <span style=''>      val tentacleShouldHaveLength = </span><span style='background: #AEF1AE'>timeToLengthStrategy(Duration.between(tentacle.launchInstant, actualInstant))</span><span style=''>
+</span>66 <span style=''>      if (</span><span style='background: #AEF1AE'>tentacleShouldHaveLength &gt; distanceBetweenCells</span><span style=''>) </span><span style='background: #AEF1AE'>distanceBetweenCells</span><span style=''> else </span><span style='background: #AEF1AE'>tentacleShouldHaveLength</span><span style=''>
+</span>67 <span style=''>    }
+</span>68 <span style=''>
+</span>69 <span style=''>    /**
+</span>70 <span style=''>      * Return the amount of time the tentacle has been attacking the destination cell
+</span>71 <span style=''>      *
+</span>72 <span style=''>      * @param actualInstant        the actual instant
+</span>73 <span style=''>      * @param timeToLengthStrategy the strategy that decides how fast is the tentacle on reaching destination
+</span>74 <span style=''>      * @return the time spent really attacking the destination cell
+</span>75 <span style=''>      */
+</span>76 <span style=''>    def hasReachedDestinationFor(actualInstant: Instant,
+</span>77 <span style=''>                                 timeToLengthStrategy: SizingStrategy[Duration, Long] = defaultMillisToLengthStrategy): Duration = {
+</span>78 <span style=''>      /**
+</span>79 <span style=''>        * @return the speed factor extracted from duration and space traveled
+</span>80 <span style=''>        */
+</span>81 <span style=''>      def extractSpeedFactor(duration: Duration, space: Long): Long = </span><span style='background: #AEF1AE'>duration.toMillis / space</span><span style=''>
+</span>82 <span style=''>
+</span>83 <span style=''>      </span><span style='background: #AEF1AE'>checkTentacleManipulationParameters(actualInstant, timeToLengthStrategy)</span><span style=''>
+</span>84 <span style=''>
+</span>85 <span style=''>      if (</span><span style='background: #AEF1AE'>Cell.distance(tentacle.from, tentacle.to) == length(actualInstant, timeToLengthStrategy)</span><span style=''>) </span><span style='background: #AEF1AE'>{
+</span>86 <span style=''></span><span style='background: #AEF1AE'>        val fromLaunchDuration = Duration.between(tentacle.launchInstant, actualInstant)
+</span>87 <span style=''></span><span style='background: #AEF1AE'>        val tentacleShouldHaveLength = timeToLengthStrategy(fromLaunchDuration)
+</span>88 <span style=''></span><span style='background: #AEF1AE'>        val timeToLengthFactor = extractSpeedFactor(fromLaunchDuration, tentacleShouldHaveLength)
+</span>89 <span style=''></span><span style='background: #AEF1AE'>
+</span>90 <span style=''></span><span style='background: #AEF1AE'>        val exceedingLength = tentacleShouldHaveLength - distanceBetweenCells
+</span>91 <span style=''></span><span style='background: #AEF1AE'>        Duration.ofMillis(exceedingLength * timeToLengthFactor)
+</span>92 <span style=''></span><span style='background: #AEF1AE'>      }</span><span style=''> else </span><span style='background: #AEF1AE'>Duration.ZERO</span><span style=''>
+</span>93 <span style=''>    }
+</span>94 <span style=''>
+</span>95 <span style=''>    /**
+</span>96 <span style=''>      * Checks actualInstant not before tentacle launch instant and parameters not null
+</span>97 <span style=''>      */
+</span>98 <span style=''>    private def checkTentacleManipulationParameters(actualInstant: Instant, strategy: SizingStrategy[_, _]): Unit = {
+</span>99 <span style=''>      </span><span style='background: #AEF1AE'>requireNonNull(actualInstant, &quot;Actual instant should not be null&quot;)</span><span style=''>
+</span>100 <span style=''>      </span><span style='background: #AEF1AE'>requireNonNull(strategy, &quot;Passed strategy cannot be null&quot;)</span><span style=''>
+</span>101 <span style=''>      </span><span style='background: #AEF1AE'>require(!actualInstant.isBefore(tentacle.launchInstant), &quot;Actual instant cannot be before tentacle launch&quot;)</span><span style=''>
+</span>102 <span style=''>    }
+</span>103 <span style=''>  }
+</span>104 <span style=''>
+</span>105 <span style=''>  /**
+</span>106 <span style=''>    * An ordering for tentacles based on launchInstant
+</span>107 <span style=''>    */
+</span>108 <span style=''>  val orderByLaunchInstant: Ordering[Tentacle] = (x: Tentacle, y: Tentacle) =&gt; </span><span style='background: #AEF1AE'>x.launchInstant.compareTo(y.launchInstant)</span><span style=''>
+</span>109 <span style=''>
+</span>110 <span style=''>}
+</span></pre>
+          </div>
+          <div class="tab-pane" id="statementlist">
+            <table cellspacing="0" cellpadding="0" class="table statementlist">
+      <tr>
+        <th>Line</th>
+        <th>Stmt Id</th>
+        <th>Pos</th>
+        <th>Tree</th>
+        <th>Symbol</th>
+        <th>Code</th>
+      </tr><tr>
+        <td>
+          21
+        </td>
+        <td>
+          735
+        </td>
+        <td>
+          580
+          -
+          630
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.util.Objects.requireNonNull
+        </td>
+        <td style="background: #AEF1AE">
+          java.util.Objects.requireNonNull[it.cwmp.client.model.game.impl.Cell](Tentacle.this.from, &quot;From cell must be not null&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          21
+        </td>
+        <td>
+          734
+        </td>
+        <td>
+          601
+          -
+          629
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;From cell must be not null&quot;
+        </td>
+      </tr><tr>
+        <td>
+          21
+        </td>
+        <td>
+          733
+        </td>
+        <td>
+          595
+          -
+          599
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.from
+        </td>
+        <td style="background: #AEF1AE">
+          Tentacle.this.from
+        </td>
+      </tr><tr>
+        <td>
+          22
+        </td>
+        <td>
+          738
+        </td>
+        <td>
+          633
+          -
+          679
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.util.Objects.requireNonNull
+        </td>
+        <td style="background: #AEF1AE">
+          java.util.Objects.requireNonNull[it.cwmp.client.model.game.impl.Cell](Tentacle.this.to, &quot;To cell must be not null&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          22
+        </td>
+        <td>
+          737
+        </td>
+        <td>
+          652
+          -
+          678
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;To cell must be not null&quot;
+        </td>
+      </tr><tr>
+        <td>
+          22
+        </td>
+        <td>
+          736
+        </td>
+        <td>
+          648
+          -
+          650
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.to
+        </td>
+        <td style="background: #AEF1AE">
+          Tentacle.this.to
+        </td>
+      </tr><tr>
+        <td>
+          23
+        </td>
+        <td>
+          741
+        </td>
+        <td>
+          682
+          -
+          746
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.util.Objects.requireNonNull
+        </td>
+        <td style="background: #AEF1AE">
+          java.util.Objects.requireNonNull[java.time.Instant](Tentacle.this.launchInstant, &quot;Launch instant must be not null&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          23
+        </td>
+        <td>
+          740
+        </td>
+        <td>
+          712
+          -
+          745
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;Launch instant must be not null&quot;
+        </td>
+      </tr><tr>
+        <td>
+          23
+        </td>
+        <td>
+          739
+        </td>
+        <td>
+          697
+          -
+          710
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.launchInstant
+        </td>
+        <td style="background: #AEF1AE">
+          Tentacle.this.launchInstant
+        </td>
+      </tr><tr>
+        <td>
+          24
+        </td>
+        <td>
+          744
+        </td>
+        <td>
+          769
+          -
+          822
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;A tentacle cannot be launched from and to same cell&quot;
+        </td>
+      </tr><tr>
+        <td>
+          24
+        </td>
+        <td>
+          743
+        </td>
+        <td>
+          757
+          -
+          767
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.lang.Object.!=
+        </td>
+        <td style="background: #AEF1AE">
+          Tentacle.this.from.!=(Tentacle.this.to)
+        </td>
+      </tr><tr>
+        <td>
+          24
+        </td>
+        <td>
+          742
+        </td>
+        <td>
+          765
+          -
+          767
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.to
+        </td>
+        <td style="background: #AEF1AE">
+          Tentacle.this.to
+        </td>
+      </tr><tr>
+        <td>
+          24
+        </td>
+        <td>
+          745
+        </td>
+        <td>
+          749
+          -
+          823
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Predef.require
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Predef.require(Tentacle.this.from.!=(Tentacle.this.to), &quot;A tentacle cannot be launched from and to same cell&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          35
+        </td>
+        <td>
+          746
+        </td>
+        <td>
+          1035
+          -
+          1038
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          100
+        </td>
+      </tr><tr>
+        <td>
+          43
+        </td>
+        <td>
+          747
+        </td>
+        <td>
+          1340
+          -
+          1372
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.TIME_TO_MOVEMENT_CONVERSION_RATE
+        </td>
+        <td style="background: #AEF1AE">
+          Tentacle.this.TIME_TO_MOVEMENT_CONVERSION_RATE
+        </td>
+      </tr><tr>
+        <td>
+          43
+        </td>
+        <td>
+          748
+        </td>
+        <td>
+          1317
+          -
+          1372
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Long./
+        </td>
+        <td style="background: #AEF1AE">
+          elapsedTime.toMillis()./(Tentacle.this.TIME_TO_MOVEMENT_CONVERSION_RATE)
+        </td>
+      </tr><tr>
+        <td>
+          52
+        </td>
+        <td>
+          750
+        </td>
+        <td>
+          1616
+          -
+          1627
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.to
+        </td>
+        <td style="background: #AEF1AE">
+          TentacleManipulation.this.tentacle.to
+        </td>
+      </tr><tr>
+        <td>
+          52
+        </td>
+        <td>
+          749
+        </td>
+        <td>
+          1601
+          -
+          1614
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.from
+        </td>
+        <td style="background: #AEF1AE">
+          TentacleManipulation.this.tentacle.from
+        </td>
+      </tr><tr>
+        <td>
+          52
+        </td>
+        <td>
+          751
+        </td>
+        <td>
+          1587
+          -
+          1628
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Cell.distance
+        </td>
+        <td style="background: #AEF1AE">
+          Cell.distance(TentacleManipulation.this.tentacle.from, TentacleManipulation.this.tentacle.to)
+        </td>
+      </tr><tr>
+        <td>
+          63
+        </td>
+        <td>
+          752
+        </td>
+        <td>
+          2123
+          -
+          2195
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.TentacleManipulation.checkTentacleManipulationParameters
+        </td>
+        <td style="background: #AEF1AE">
+          TentacleManipulation.this.checkTentacleManipulationParameters(actualInstant, timeToLengthStrategy)
+        </td>
+      </tr><tr>
+        <td>
+          65
+        </td>
+        <td>
+          753
+        </td>
+        <td>
+          2272
+          -
+          2294
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.launchInstant
+        </td>
+        <td style="background: #AEF1AE">
+          TentacleManipulation.this.tentacle.launchInstant
+        </td>
+      </tr><tr>
+        <td>
+          65
+        </td>
+        <td>
+          755
+        </td>
+        <td>
+          2234
+          -
+          2311
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          timeToLengthStrategy.apply(java.time.Duration.between(TentacleManipulation.this.tentacle.launchInstant, actualInstant))
+        </td>
+      </tr><tr>
+        <td>
+          65
+        </td>
+        <td>
+          754
+        </td>
+        <td>
+          2255
+          -
+          2310
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.time.Duration.between
+        </td>
+        <td style="background: #AEF1AE">
+          java.time.Duration.between(TentacleManipulation.this.tentacle.launchInstant, actualInstant)
+        </td>
+      </tr><tr>
+        <td>
+          66
+        </td>
+        <td>
+          756
+        </td>
+        <td>
+          2349
+          -
+          2369
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.TentacleManipulation.distanceBetweenCells
+        </td>
+        <td style="background: #AEF1AE">
+          TentacleManipulation.this.distanceBetweenCells
+        </td>
+      </tr><tr>
+        <td>
+          66
+        </td>
+        <td>
+          759
+        </td>
+        <td>
+          2371
+          -
+          2391
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.TentacleManipulation.distanceBetweenCells
+        </td>
+        <td style="background: #AEF1AE">
+          TentacleManipulation.this.distanceBetweenCells
+        </td>
+      </tr><tr>
+        <td>
+          66
+        </td>
+        <td>
+          758
+        </td>
+        <td>
+          2371
+          -
+          2391
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.TentacleManipulation.distanceBetweenCells
+        </td>
+        <td style="background: #AEF1AE">
+          TentacleManipulation.this.distanceBetweenCells
+        </td>
+      </tr><tr>
+        <td>
+          66
+        </td>
+        <td>
+          757
+        </td>
+        <td>
+          2322
+          -
+          2369
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Long.&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          tentacleShouldHaveLength.&gt;(TentacleManipulation.this.distanceBetweenCells)
+        </td>
+      </tr><tr>
+        <td>
+          66
+        </td>
+        <td>
+          760
+        </td>
+        <td>
+          2397
+          -
+          2421
+        </td>
+        <td>
+          Ident
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.TentacleManipulation.tentacleShouldHaveLength
+        </td>
+        <td style="background: #AEF1AE">
+          tentacleShouldHaveLength
+        </td>
+      </tr><tr>
+        <td>
+          81
+        </td>
+        <td>
+          761
+        </td>
+        <td>
+          3135
+          -
+          3160
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Long./
+        </td>
+        <td style="background: #AEF1AE">
+          duration.toMillis()./(space)
+        </td>
+      </tr><tr>
+        <td>
+          83
+        </td>
+        <td>
+          762
+        </td>
+        <td>
+          3168
+          -
+          3240
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.TentacleManipulation.checkTentacleManipulationParameters
+        </td>
+        <td style="background: #AEF1AE">
+          TentacleManipulation.this.checkTentacleManipulationParameters(actualInstant, timeToLengthStrategy)
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          765
+        </td>
+        <td>
+          3297
+          -
+          3340
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.TentacleManipulation.length
+        </td>
+        <td style="background: #AEF1AE">
+          TentacleManipulation.this.length(actualInstant, timeToLengthStrategy)
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          764
+        </td>
+        <td>
+          3281
+          -
+          3292
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.to
+        </td>
+        <td style="background: #AEF1AE">
+          TentacleManipulation.this.tentacle.to
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          775
+        </td>
+        <td>
+          3342
+          -
+          3761
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          {
+  val fromLaunchDuration: java.time.Duration = java.time.Duration.between(TentacleManipulation.this.tentacle.launchInstant, actualInstant);
+  val tentacleShouldHaveLength: Long = timeToLengthStrategy.apply(fromLaunchDuration);
+  val timeToLengthFactor: Long = extractSpeedFactor(fromLaunchDuration, tentacleShouldHaveLength);
+  val exceedingLength: Long = tentacleShouldHaveLength.-(TentacleManipulation.this.distanceBetweenCells);
+  java.time.Duration.ofMillis(exceedingLength.*(timeToLengthFactor))
+}
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          766
+        </td>
+        <td>
+          3252
+          -
+          3340
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Long.==
+        </td>
+        <td style="background: #AEF1AE">
+          Cell.distance(TentacleManipulation.this.tentacle.from, TentacleManipulation.this.tentacle.to).==(TentacleManipulation.this.length(actualInstant, timeToLengthStrategy))
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          763
+        </td>
+        <td>
+          3266
+          -
+          3279
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.from
+        </td>
+        <td style="background: #AEF1AE">
+          TentacleManipulation.this.tentacle.from
+        </td>
+      </tr><tr>
+        <td>
+          86
+        </td>
+        <td>
+          768
+        </td>
+        <td>
+          3377
+          -
+          3432
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.time.Duration.between
+        </td>
+        <td style="background: #AEF1AE">
+          java.time.Duration.between(TentacleManipulation.this.tentacle.launchInstant, actualInstant)
+        </td>
+      </tr><tr>
+        <td>
+          86
+        </td>
+        <td>
+          767
+        </td>
+        <td>
+          3394
+          -
+          3416
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.launchInstant
+        </td>
+        <td style="background: #AEF1AE">
+          TentacleManipulation.this.tentacle.launchInstant
+        </td>
+      </tr><tr>
+        <td>
+          87
+        </td>
+        <td>
+          769
+        </td>
+        <td>
+          3472
+          -
+          3512
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          timeToLengthStrategy.apply(fromLaunchDuration)
+        </td>
+      </tr><tr>
+        <td>
+          88
+        </td>
+        <td>
+          770
+        </td>
+        <td>
+          3546
+          -
+          3610
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.TentacleManipulation.extractSpeedFactor
+        </td>
+        <td style="background: #AEF1AE">
+          extractSpeedFactor(fromLaunchDuration, tentacleShouldHaveLength)
+        </td>
+      </tr><tr>
+        <td>
+          90
+        </td>
+        <td>
+          771
+        </td>
+        <td>
+          3669
+          -
+          3689
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.TentacleManipulation.distanceBetweenCells
+        </td>
+        <td style="background: #AEF1AE">
+          TentacleManipulation.this.distanceBetweenCells
+        </td>
+      </tr><tr>
+        <td>
+          90
+        </td>
+        <td>
+          772
+        </td>
+        <td>
+          3642
+          -
+          3689
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Long.-
+        </td>
+        <td style="background: #AEF1AE">
+          tentacleShouldHaveLength.-(TentacleManipulation.this.distanceBetweenCells)
+        </td>
+      </tr><tr>
+        <td>
+          91
+        </td>
+        <td>
+          774
+        </td>
+        <td>
+          3698
+          -
+          3753
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.time.Duration.ofMillis
+        </td>
+        <td style="background: #AEF1AE">
+          java.time.Duration.ofMillis(exceedingLength.*(timeToLengthFactor))
+        </td>
+      </tr><tr>
+        <td>
+          91
+        </td>
+        <td>
+          773
+        </td>
+        <td>
+          3716
+          -
+          3752
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Long.*
+        </td>
+        <td style="background: #AEF1AE">
+          exceedingLength.*(timeToLengthFactor)
+        </td>
+      </tr><tr>
+        <td>
+          92
+        </td>
+        <td>
+          777
+        </td>
+        <td>
+          3767
+          -
+          3780
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          java.time.Duration.ZERO
+        </td>
+        <td style="background: #AEF1AE">
+          java.time.Duration.ZERO
+        </td>
+      </tr><tr>
+        <td>
+          92
+        </td>
+        <td>
+          776
+        </td>
+        <td>
+          3767
+          -
+          3780
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          java.time.Duration.ZERO
+        </td>
+        <td style="background: #AEF1AE">
+          java.time.Duration.ZERO
+        </td>
+      </tr><tr>
+        <td>
+          99
+        </td>
+        <td>
+          778
+        </td>
+        <td>
+          4017
+          -
+          4083
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.util.Objects.requireNonNull
+        </td>
+        <td style="background: #AEF1AE">
+          java.util.Objects.requireNonNull[java.time.Instant](actualInstant, &quot;Actual instant should not be null&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          100
+        </td>
+        <td>
+          779
+        </td>
+        <td>
+          4090
+          -
+          4148
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.util.Objects.requireNonNull
+        </td>
+        <td style="background: #AEF1AE">
+          java.util.Objects.requireNonNull[it.cwmp.client.model.game.SizingStrategy[_$1,_$2]](strategy, &quot;Passed strategy cannot be null&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          101
+        </td>
+        <td>
+          783
+        </td>
+        <td>
+          4155
+          -
+          4262
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Predef.require
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Predef.require(actualInstant.isBefore(TentacleManipulation.this.tentacle.launchInstant).unary_!, &quot;Actual instant cannot be before tentacle launch&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          101
+        </td>
+        <td>
+          782
+        </td>
+        <td>
+          4212
+          -
+          4261
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;Actual instant cannot be before tentacle launch&quot;
+        </td>
+      </tr><tr>
+        <td>
+          101
+        </td>
+        <td>
+          781
+        </td>
+        <td>
+          4163
+          -
+          4210
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          scala.Boolean.unary_!
+        </td>
+        <td style="background: #AEF1AE">
+          actualInstant.isBefore(TentacleManipulation.this.tentacle.launchInstant).unary_!
+        </td>
+      </tr><tr>
+        <td>
+          101
+        </td>
+        <td>
+          780
+        </td>
+        <td>
+          4187
+          -
+          4209
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.launchInstant
+        </td>
+        <td style="background: #AEF1AE">
+          TentacleManipulation.this.tentacle.launchInstant
+        </td>
+      </tr><tr>
+        <td>
+          108
+        </td>
+        <td>
+          785
+        </td>
+        <td>
+          4421
+          -
+          4463
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.time.Instant.compareTo
+        </td>
+        <td style="background: #AEF1AE">
+          x.launchInstant.compareTo(y.launchInstant)
+        </td>
+      </tr><tr>
+        <td>
+          108
+        </td>
+        <td>
+          784
+        </td>
+        <td>
+          4447
+          -
+          4462
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          it.cwmp.client.model.game.impl.Tentacle.launchInstant
+        </td>
+        <td style="background: #AEF1AE">
+          y.launchInstant
+        </td>
+      </tr>
+    </table>
+          </div>
+        </div>
+      </body>
+    </html>
