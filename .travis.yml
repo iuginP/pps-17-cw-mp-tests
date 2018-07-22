@@ -6,6 +6,8 @@ script:
   - './gradlew'
 after_success:
   - 'bash scripts/commit_and_upload.sh -r iuginP/pps-17-cw-mp-tests -b master -s latest-docs/scala -d scala'
+  - 'bash scripts/commit_and_upload.sh -r iuginP/pps-17-cw-mp-tests -b master -s latest-docs/java -d java'
+  - 'bash scripts/commit_and_upload.sh -r iuginP/pps-17-cw-mp-tests -b master -s latest-docs/java -d scoverage report'
 deploy:
   provider: releases
   api-key: $GITHUB_API_KEY
